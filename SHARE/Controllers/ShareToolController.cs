@@ -14,16 +14,32 @@ namespace SHARE.Controllers
             List<ShareTool> ShareToolList = new List<ShareTool>();
             ShareToolList.Add(new ShareTool("غسالة", "غسالة مستعملة ", 1));
             ShareToolList.Add(new ShareTool("دراجة", "دراجة مستعملة ", 2));
-            ShareToolList.Add(new ShareTool("موبيل", "موبيل مستعملة ", 3));
+            ShareToolList.Add(new ShareTool("موبيل", "موبيل مستعملة ", 0));
             ShareToolList.Add(new ShareTool("تلفاز", "تلفاز مستعملة ", 2));
             ShareToolList.Add(new ShareTool("غسالة", "غسالة مستعملة ", 1));
             return View(ShareToolList);
         }
     
-        public ContentResult PrintName(string Name)
+        public ActionResult ReqestTool()
         {
-            return Content( "Name: " + Name);
+            return Content("تم طلب الاداة");
+        }
+        public ActionResult Create()
+        {
+            return View();
         }
 
+        [HttpPost]
+        public ActionResult Create(ShareTool model)
+        {
+            if (ModelState.IsValid) {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
+           
+        }
     }
-}
+    }

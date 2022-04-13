@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<SHARE.Models.ShareTool>
 
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 
 <html>
@@ -12,6 +8,12 @@
     <title>Index</title>
 </head>
 <body>
+    @{
+        string title = "أدوات متوفرة للمشاركة"; }
+
+    <h2>@DateTime.Now.ToShortTimeString()</h2>
+    <h3>@title</h3>
+    @Model.Count() 
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -28,26 +30,36 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-    
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Quantity == 0)
+                    {
+                        <text>انتظر حتي يتم أعاده الاداة</Text>
+                    }
+                    else if(item.Quantity == 1)
+                    {
+                        <text>سارع بالطلب الان ان كنت بحاجة اليها</Text>
+                    }
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })   |
+                    @Html.ActionLink("Reqest", "ReqestTool", new { /* id=item.PrimaryKey */ }) |
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>
