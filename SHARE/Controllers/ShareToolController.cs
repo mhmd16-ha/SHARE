@@ -6,11 +6,14 @@ using System.Web.Mvc;
 using SHARE.Models;
 namespace SHARE.Controllers
 {
+    [HandleError]
     public class ShareToolController : Controller
     {
         // GET: ShareTool
         public ActionResult Index()
         {
+            
+            TempData["User"] = "Mo Said";
             List<ShareTool> ShareToolList = new List<ShareTool>();
             ShareToolList.Add(new ShareTool("غسالة", "غسالة مستعملة ", 1));
             ShareToolList.Add(new ShareTool("دراجة", "دراجة مستعملة ", 2));
@@ -22,16 +25,20 @@ namespace SHARE.Controllers
     
         public ActionResult ReqestTool()
         {
+          
             return Content("تم طلب الاداة");
         }
         public ActionResult Create()
         {
+            string user1 = "";
+           
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(ShareTool model)
         {
+           
             if (ModelState.IsValid) {
                 return RedirectToAction("Index");
             }
