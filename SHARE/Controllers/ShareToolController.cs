@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Share.Business;
 using SHARE.Models;
+using Share1.DAL;
+
 namespace SHARE.Controllers
 {
     [HandleError]
@@ -12,15 +15,9 @@ namespace SHARE.Controllers
         // GET: ShareTool
         public ActionResult Index()
         {
-            
-            TempData["User"] = "Mo Said";
-            List<ShareTool> ShareToolList = new List<ShareTool>();
-            ShareToolList.Add(new ShareTool("غسالة", "غسالة مستعملة ", 1));
-            ShareToolList.Add(new ShareTool("دراجة", "دراجة مستعملة ", 2));
-            ShareToolList.Add(new ShareTool("موبيل", "موبيل مستعملة ", 0));
-            ShareToolList.Add(new ShareTool("تلفاز", "تلفاز مستعملة ", 2));
-            ShareToolList.Add(new ShareTool("غسالة", "غسالة مستعملة ", 1));
-            return View(ShareToolList);
+            ToolRepository tool = new ToolRepository();
+           List<Tool> tools= tool.GetAllTools();
+            return View(tools);
         }
     
         public ActionResult ReqestTool()

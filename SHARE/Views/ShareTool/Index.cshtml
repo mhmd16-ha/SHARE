@@ -1,65 +1,49 @@
-﻿@model IEnumerable<SHARE.Models.ShareTool>
+﻿@model IEnumerable<Share1.DAL.Tool>
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap" rel="stylesheet">
     <title>Index</title>
+    <style>
+        h2 {
+            font-family: Nunito Sans,sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body style="direction: rtl; font-family: Nunito Sans ,sans-serif; ">
     @{
         string title = "أدوات متوفرة للمشاركة"; }
+    <h2>@Resourses.ShareResources.hello</h2>
 
     <h2>@DateTime.Now.ToShortTimeString()</h2>
-    <h3>@title</h3>
-    @Model.Count() 
+    <h3>  @Model.Count() @title</h3>
+  
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
-        </tr>
-
+          
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @if (item.Quantity == 0)
-                    {
-                        <text>انتظر حتي يتم أعاده الاداة</Text>
-                    }
-                    else if(item.Quantity == 1)
-                    {
-                        <text>سارع بالطلب الان ان كنت بحاجة اليها</Text>
-                    }
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })   |
-                    @Html.ActionLink("Reqest", "ReqestTool", new { /* id=item.PrimaryKey */ }) |
-                </td>
-            </tr>
+<div class="col-md-6" style="text-align:center">
+    <div class="col-md-12" >
+        <img src="@item.Image" style="width:350px;height:200px;object-fit:contain;object-postion:center;" />
+    </div>
+        <h2> @Html.DisplayFor(modelItem => item.Name)</h2>
+        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+        <p> @Html.DisplayFor(modelItem => item.Quantity)</p>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })   |
+            @Html.ActionLink("Reqest", "ReqestTool", new { /* id=item.PrimaryKey */ }) |
+        </p>
+    </div>
+
         }
 
-    </table>
+  
 </body>
 </html>

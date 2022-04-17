@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShareDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="BorrowedTool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Tool_Id" Type="int" />
+          <Property Name="Borrow_Data" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tools">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="350" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Adress_Adress">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowedTool_Tools">
+          <End Role="Tools" Type="Self.Tools" Multiplicity="0..1" />
+          <End Role="BorrowedTool" Type="Self.BorrowedTool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BorrowedTool">
+              <PropertyRef Name="Tool_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowedTool_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="BorrowedTool" Type="Self.BorrowedTool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BorrowedTool">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShareDBModelStoreContainer">
+          <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorrowedTool" EntityType="Self.BorrowedTool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tools" EntityType="Self.Tools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adress_Adress" Association="Self.FK_Adress_Adress">
+            <End Role="User" EntitySet="User" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowedTool_Tools" Association="Self.FK_BorrowedTool_Tools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="BorrowedTool" EntitySet="BorrowedTool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowedTool_User" Association="Self.FK_BorrowedTool_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BorrowedTool" EntitySet="BorrowedTool" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShareDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adress1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Adress_Adress" FromRole="Adress" ToRole="User" />
+        </EntityType>
+        <EntityType Name="BorrowedTool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Tool_Id" Type="Int32" />
+          <Property Name="Borrow_Data" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tool" Relationship="Self.FK_BorrowedTool_Tools" FromRole="BorrowedTool" ToRole="Tools" />
+          <NavigationProperty Name="User" Relationship="Self.FK_BorrowedTool_User" FromRole="BorrowedTool" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Tool">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BorrowedTools" Relationship="Self.FK_BorrowedTool_Tools" FromRole="Tools" ToRole="BorrowedTool" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Adresses" Relationship="Self.FK_Adress_Adress" FromRole="User" ToRole="Adress" />
+          <NavigationProperty Name="BorrowedTools" Relationship="Self.FK_BorrowedTool_User" FromRole="User" ToRole="BorrowedTool" />
+        </EntityType>
+        <Association Name="FK_Adress_Adress">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowedTool_Tools">
+          <End Role="Tools" Type="Self.Tool" Multiplicity="0..1" />
+          <End Role="BorrowedTool" Type="Self.BorrowedTool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BorrowedTool">
+              <PropertyRef Name="Tool_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowedTool_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="BorrowedTool" Type="Self.BorrowedTool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BorrowedTool">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShareDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adresses" EntityType="Self.Adress" />
+          <EntitySet Name="BorrowedTools" EntityType="Self.BorrowedTool" />
+          <EntitySet Name="Tools" EntityType="Self.Tool" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Adress_Adress" Association="Self.FK_Adress_Adress">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Adress" EntitySet="Adresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowedTool_Tools" Association="Self.FK_BorrowedTool_Tools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="BorrowedTool" EntitySet="BorrowedTools" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowedTool_User" Association="Self.FK_BorrowedTool_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BorrowedTool" EntitySet="BorrowedTools" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShareDBModelStoreContainer" CdmEntityContainer="ShareDB">
+          <EntitySetMapping Name="Adresses">
+            <EntityTypeMapping TypeName="ShareDBModel.Adress">
+              <MappingFragment StoreEntitySet="Adress">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Adress1" ColumnName="Adress" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorrowedTools">
+            <EntityTypeMapping TypeName="ShareDBModel.BorrowedTool">
+              <MappingFragment StoreEntitySet="BorrowedTool">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Tool_Id" ColumnName="Tool_Id" />
+                <ScalarProperty Name="Borrow_Data" ColumnName="Borrow_Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tools">
+            <EntityTypeMapping TypeName="ShareDBModel.Tool">
+              <MappingFragment StoreEntitySet="Tools">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ShareDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
